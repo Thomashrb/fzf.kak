@@ -30,19 +30,19 @@ declare-option -docstring 'Highlight command to use for previews' \
 str fzf_highlight_command "bat --color=always --style=plain {}"
 
 declare-option -docstring "height of fzf tmux split in screen lines or percents" \
-str fzf_tmux_height '25%'
+str fzf_tmux_height '90%'
 
 declare-option -docstring "width of fzf tmux popup in screen lines or percents" \
-str fzf_tmux_popup_width '50%'
+str fzf_tmux_popup_width '90%'
 
 declare-option -docstring "height of fzf tmux split for file preview in screen lines or percents" \
-str fzf_preview_tmux_height '70%'
+str fzf_preview_tmux_height '90%'
 
 declare-option -docstring "width of preview window" \
 str fzf_preview_width '50%'
 
 declare-option -docstring "height of preview window" \
-str fzf_preview_height '60%'
+str fzf_preview_height '95%'
 
 declare-option -docstring 'use tmux popup instead of split pane' \
 bool fzf_tmux_popup false
