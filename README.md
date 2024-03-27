@@ -4,34 +4,7 @@ This is a fork of fzf.kak attempting to slim down the supported featureset with 
 fzf.kak is a plugin for [Kakoune][7] editor, that provides integration with the [fzf][8] tool.
 There's also limited support for [skim][9], which can be enabled by changing the `fzf_implementation` option.
 
-![showcase][10]
-
-
 ## Installation
-
-
-### With [plug.kak][11]
-
-The recommended way to install fzf.kak is to use a plug.kak plugin manager.
-To install fzf.kak add this to the `kakrc`:
-
-``` kak
-plug "andreyorst/fzf.kak"
-```
-
-Then reload the configuration file or restart Kakoune and run `:plug-install`.
-
-To configure the plugin modules:
-
-```kak
-plug "andreyorst/fzf.kak" config %{
-  map global normal <c-p> ': fzf-mode<ret>'
-} defer <module-name> %{
-  <settings of module>
-} 
-```
-
-### Without plugin manager
 
 This plugin consists of several parts which are referred to as "modules".
 So, for the plugin to work the base module must be loaded:
@@ -83,7 +56,6 @@ Otherwise, the `terminal` command is being used to create new windows.
 
 fzf.kak features a lot of settings via options that can be altered to change how fzf.kak behaves.
 Each `.kak` file provides a Kakoune module, so any settings which alter variable values should be wrapped in the `ModuleLoaded` hook.
-See [plug.kak manual section for `defer`](https://github.com/andreyorst/plug.kak/tree/master#deferring-plugin-configuration) that explains how to do this when using the plug.kak.
 
 
 ### Default query
@@ -262,7 +234,6 @@ The following arguments are supported:
 - `-filter`: A pipe which will be applied to the result provided by `fzf`.
   For example, if we are returning such line `3 hello, world!` from `fzf`, and we are interested only in the first field which is `3`, we can use `-filter %{cut -f 1}`.
   Basically, everything that `fzf` returns is piped to this filter command.
-  See [fzf-search.kak][22] as example.
 - `-post-action`: Extra commands that are performed after the `-kak-cmd` command.
 
 
@@ -281,17 +252,9 @@ There are another (often more simple and robust) plugins, which add support for 
    Also allows you to connect Kakoune to other applications, including `fzf`.
 
 
-[1]: https://img.shields.io/github/release/andreyorst/fzf.kak.svg
-[2]: https://github.com/andreyorst/fzf.kak/releases
-[3]: https://img.shields.io/github/release-date/andreyorst/fzf.kak.svg
-[4]: https://github.com/andreyorst/fzf.kak/releases
-[5]: https://img.shields.io/github/commits-since/andreyorst/fzf.kak/latest.svg
-[6]: https://img.shields.io/github/license/andreyorst/fzf.kak.svg
 [7]: https://github.com/mawww/kakoune
 [8]: https://github.com/junegunn/fzf
-[9]: https://github.com/lotabout/skim
 [10]: https://user-images.githubusercontent.com/19470159/46813471-6ee76800-cd7f-11e8-89aa-123b3a5f9f1b.gif
-[11]: https://github.com/andreyorst/plug.kak
 [12]: https://www.gnu.org/software/findutils/
 [13]: https://github.com/ggreer/the_silver_searcher
 [14]: https://github.com/BurntSushi/ripgrep
@@ -300,10 +263,7 @@ There are another (often more simple and robust) plugins, which add support for 
 [17]: https://github.com/rubychan/coderay
 [18]: https://gitlab.com/saalen/highlight
 [19]: https://github.com/jneen/rouge
-[20]: #writing-a-module
-[21]: rc/modules/sk-grep.kak
 [22]: rc/modules/fzf-search.kak
-[23]: #configuration
 [24]: https://gitlab.com/losnappas/fzf-yank-ring.kak
 [25]: https://github.com/alexherbo2/yank-ring.kak
 [26]: https://github.com/gustavo-hms/peneira
@@ -311,6 +271,6 @@ There are another (often more simple and robust) plugins, which add support for 
 [28]: https://github.com/alexherbo2/kakoune.cr
 [29]: https://jeskin.net/blog/clp/
 
-<!--  LocalWords:  Github Kakoune fzf kak config VCS ctags Tmux fd sk
-      LocalWords:  ripgrep readme Coderay rc
+<!--  LocalWords:  Github Kakoune fzf kak config git ctags Tmux fd
+      LocalWords:  ripgrep readme rc
  -->
