@@ -36,7 +36,7 @@ If all modules were loaded, the following mappings are available:
 
 - <kbd>b</kbd> - Select buffer.
 - <kbd>f</kbd> - Search for file and open it.
-- <kbd>v</kbd> - Edit file in version control system tree.
+- <kbd>v</kbd> - Search for file in git/vcs project
 - <kbd>s</kbd> - Search over buffer contents and jump to result line.
 - <kbd>t</kbd> - Browse ctags tags.
 - <kbd>Alt</kbd>+<kbd>t</kbd> - Select tag kind filter on per language basis.
@@ -88,62 +88,6 @@ Keys that are used in the `fzf` window can be configured with these options:
 
 These options should be set to work with fzf `--expect` parameter, so check out fzf documentation on this.
 
-
-### File command
-
-| module     |
-|------------|
-| `fzf-file` |
-
-A command that is used to search for files and their arguments can be configured by changing the value of the `fzf_file_command` variable, which is available in the `fzf-file` module.
-
-Supported tools are [GNU Find][12], [The Silver Searcher][13], [ripgrep][14], [fd][15].
-A default set of arguments is provided for each of these searchers, only the name of the tool can be assigned to the `fzf_file_command` variable:
-
-```kak
-set-option global fzf_file_command 'rg' # 'ag', 'fd', or 'find'
-```
-
-Default arguments can be changed by setting the complete command to execute:
-
-```kak
-set-option global fzf_file_command "find . \( -path '*/.svn*' -o -path '*/.git*' \) -prune -o -type f -print"
-```
-
-### Grep command
-
-| module     |
-|------------|
-| `fzf-grep` |
-
-A command that is used to search for text in files can be configured by changing the value of the `fzf_grep_command` variable, which is available in the `fzf-grep` module.
-
-Supported tools are [GNU Find][12], [The Silver Searcher][13], [ripgrep][14].
-A default set of arguments is provided for each of these searchers, only the name of the tool can be assigned to the `fzf_grep_command` variable:
-
-```kak
-set-option global fzf_grep_command 'rg' # 'ag', or 'find'
-```
-
-### Preview
-
-| module     |
-|------------|
-| `fzf-file` |
-
-fzf.kak tries to automatically detect where to show preview window, depending on the aspect ratio of the new terminal window.
-By default, if the doubled height is bigger than the width, preview occupies the upper 60% of space.
-If the height is smaller than the width, a preview is shown on the right side.
-These amounts can be configured with `fzf_preview_height` and `fzf_preview_width` options.
-
-When using fzf.kak inside `tmux`, the bottom pane is used for all `fzf` commands, and the preview window is displayed on the right side.
-When the preview is turned on, the height of the `tmux` split is increased to provide more space.
-Split height can be configured with the `fzf_preview_tmux_height` variable.
-
-*NOTE:* The `fzf_preview_lines` option has been removed to accomodate automatically centering the location of match results.
-
-The preview feature can be disabled entirely by setting the `fzf_preview` option to `false`.
-
 ### Tmux
 
 | module |
@@ -157,7 +101,7 @@ The height of this split can be changed with the `fzf_tmux_height` option.
 
 ## `fzf` command
 
-`fzf` command can be used from prompt mode and for [scripting][20].
+`fzf` command can be used from prompt mode and for scripting.
 The following arguments are supported:
 
 - `-kak-cmd`: A Kakoune command that is applied to `fzf` resulting value, e.g. `edit -existing`, `change-directory`, e.t.c.
@@ -192,15 +136,6 @@ There are another (often more simple and robust) plugins, which add support for 
 [7]: https://github.com/mawww/kakoune
 [8]: https://github.com/junegunn/fzf
 [10]: https://user-images.githubusercontent.com/19470159/46813471-6ee76800-cd7f-11e8-89aa-123b3a5f9f1b.gif
-[12]: https://www.gnu.org/software/findutils/
-[13]: https://github.com/ggreer/the_silver_searcher
-[14]: https://github.com/BurntSushi/ripgrep
-[15]: https://github.com/sharkdp/fd
-[16]: https://github.com/sharkdp/bat
-[17]: https://github.com/rubychan/coderay
-[18]: https://gitlab.com/saalen/highlight
-[19]: https://github.com/jneen/rouge
-[22]: rc/modules/fzf-search.kak
 [24]: https://gitlab.com/losnappas/fzf-yank-ring.kak
 [25]: https://github.com/alexherbo2/yank-ring.kak
 [26]: https://github.com/gustavo-hms/peneira
