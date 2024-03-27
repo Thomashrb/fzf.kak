@@ -16,8 +16,7 @@ provide-module fzf %§
 # Options
 declare-option -docstring 'implementation of fzf that you want to use.
 Currently supported implementations:
-    fzf:  github.com/junegunn/fzf
-    sk: github.com/lotabout/skim' \
+    fzf:  github.com/junegunn/fzf' \
 str fzf_implementation 'fzf'
 
 declare-option -docstring 'allow showing preview window' \
@@ -94,7 +93,6 @@ Switches:
     -kak-cmd <command>: A Kakoune cmd that is applied to fzf resulting value
     -multiple-cmd <command>: A Kakoune cmd that is applied all multiple selected files but the first one
     -items-cmd <items command>: A command that is used as a pipe to provide list of values to fzf
-    -fzf-impl <implementation>: Owerride fzf implementation variable
     -fzf-args <args>: Additional flags for fzf program
     -preview-cmd <command>: A preview command
     -preview: Should fzf window include preview
@@ -104,7 +102,6 @@ Switches:
     printf "%s\n" "-kak-cmd
 -multiple-cmd
 -items-cmd
--fzf-impl
 -fzf-args
 -preview-cmd
 -preview
@@ -112,8 +109,6 @@ Switches:
 -post-action"
 } \
 fzf -params .. %{ evaluate-commands %sh{
-    fzf_impl="${kak_opt_fzf_implementation:?}"
-
     # trims selection and escapes single quotes
     selection=$(printf "%s" "${kak_selection:-}" | sed -e "s/^[[:blank:]]*//g;s/[[:blank:]]*$//g;s/'/'\\\\''/g")
 
@@ -127,7 +122,6 @@ fzf -params .. %{ evaluate-commands %sh{
             (-kak-cmd)      shift; kakoune_cmd="$1"  ;;
             (-multiple-cmd) shift; multiple_cmd="$1" ;;
             (-items-cmd)    shift; items_cmd="$1 |"  ;;
-            (-fzf-impl)     shift; fzf_impl="$1"     ;;
             (-fzf-args)     shift; fzf_args="$1"     ;;
             (-preview-cmd)  shift; preview_cmd="$1"  ;;
             (-preview)             preview="true"    ;;
@@ -170,7 +164,7 @@ fzf -params .. %{ evaluate-commands %sh{
         fi
         # compose entire fzf command with all args into single file which will be executed later
         printf "%s\n" "export FZF_DEFAULT_OPTS=\"${kak_opt_fzf_default_opts:-}\""
-        printf "%s\n" "cd \"${PWD}\" && ${preview_position} ${items_cmd} ${fzf_impl} ${default_query} ${fzf_args} ${preview_cmd} ${filter} > ${result}"
+        printf "%s\n" "cd \"${PWD}\" && ${preview_position} ${items_cmd} fzf ${default_query} ${fzf_args} ${preview_cmd} ${filter} > ${result}"
         printf "%s\n" "rm ${fzfcmd}"
     ) >> "${fzfcmd}"
     chmod 755 "${fzfcmd}"

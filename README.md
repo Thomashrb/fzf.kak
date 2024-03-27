@@ -2,7 +2,6 @@
 
 This is a fork of fzf.kak attempting to slim down the supported featureset with the goal of being easier to keep up to date.
 fzf.kak is a plugin for [Kakoune][7] editor, that provides integration with the [fzf][8] tool.
-There's also limited support for [skim][9], which can be enabled by changing the `fzf_implementation` option.
 
 ## Installation
 
@@ -224,9 +223,6 @@ The following arguments are supported:
 - `-multiple-cmd`: A Kakoune command that is applied when multiple items are selected to every item but the first one.
 - `-items-cmd`: A command that is used as a pipe to provide a list of values to `fzf`.
   For example, if we want to pass a list of all files recursively in the current directory, we would use `-items-cmd %{find .}` which will be piped to the `fzf` tool.
-- `-fzf-impl`: Override `fzf` implementation variable.
-  Can be used if the command needs to provide different arguments to `fzf`.
-  See [sk-grep.kak][21] as example.
 - `-fzf-args`: Additional flags for `fzf` program.
 - `-preview-cmd`: A preview command.
   Can be used to override default preview handling.
