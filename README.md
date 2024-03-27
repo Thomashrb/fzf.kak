@@ -1,8 +1,6 @@
 # fzf.kak
 
-[![GitHub release][1]][2] [![GitHub Release Date][3]][4]
-![Github commits (since latest release)][5] ![license][6]
-
+This is a fork of fzf.kak attempting to slim down the supported featureset with the goal of being easier to keep up to date.
 fzf.kak is a plugin for [Kakoune][7] editor, that provides integration with the [fzf][8] tool.
 There's also limited support for [skim][9], which can be enabled by changing the `fzf_implementation` option.
 
@@ -266,20 +264,6 @@ The following arguments are supported:
   Basically, everything that `fzf` returns is piped to this filter command.
   See [fzf-search.kak][22] as example.
 - `-post-action`: Extra commands that are performed after the `-kak-cmd` command.
-
-
-## Contributing
-
-Please do.
-If you want to contribute to fzf.kak by adding a module, you can submit one by providing a pull request, or just open a feature request and we'll see what can be done.
-
-The basic idea behind the module structure can be described as:
-
-1. Provide a user module;
-2. Define a command that calls the `fzf` function with appropriate arguments;
-3. Create a mapping in a `ModuleLoaded` hook, that requires a new module, and calls the command.
-
-See how existing modules are implemented to understand the idea of how modules are constructed.
 
 
 ### External modules
