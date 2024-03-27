@@ -37,7 +37,6 @@ If all modules were loaded, the following mappings are available:
 - <kbd>b</kbd> - Select buffer.
 - <kbd>f</kbd> - Search for file and open it.
 - <kbd>v</kbd> - Edit file in version control system tree.
-- <kbd>Alt</kbd>+<kbd>v</kbd> - Explicitly select which VCS command to run.
 - <kbd>s</kbd> - Search over buffer contents and jump to result line.
 - <kbd>t</kbd> - Browse ctags tags.
 - <kbd>Alt</kbd>+<kbd>t</kbd> - Select tag kind filter on per language basis.
@@ -144,47 +143,6 @@ Split height can be configured with the `fzf_preview_tmux_height` variable.
 *NOTE:* The `fzf_preview_lines` option has been removed to accomodate automatically centering the location of match results.
 
 The preview feature can be disabled entirely by setting the `fzf_preview` option to `false`.
-
-
-#### Highlighting preview window
-
-| module     |
-|------------|
-| `fzf-file` |
-
-Contents of the file displayed within the preview window can be syntax highlighted.
-This can be enabled by specifying a highlighter to use with the `fzf_highlight_command` option.
-These highlighters are are supported out of the box:
-
-* [Bat][16]
-* [Coderay][17]
-* [Highlight][18]
-* [Rouge][19]
-* [Clp][29]
-
-Although other tools are not supported by the script, they should work fine as long as they work with `fzf`.
-
-
-### VCS
-
-| module    |
-|-----------|
-| `fzf-vcs` |
-
-This script supports these version control systems: Git, Subversion, GNU Bazaar, and Mercurial.
-By default <kbd>v</kbd> mapping from `fzf` mode will detect your version control system  automatically.
-To explicitly use some particular VCS command, the <kbd>Alt</kbd>+<kbd>v</kbd> mapping can be used, which includes all supported VCS shortcuts.
-
-To set parameters to VCS command used to provide project files the following options can be used:
-
-* `fzf_git_command`
-* `fzf_svn_command`
-* `fzf_bzr_command`
-* `fzf_hg_command`
-
-Other VCS are not supported officially.
-Feature requests and merge requests are welcome.
-
 
 ### Tmux
 
