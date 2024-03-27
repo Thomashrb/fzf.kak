@@ -42,8 +42,6 @@ If all modules were loaded, the following mappings are available:
 - <kbd>t</kbd> - Browse ctags tags.
 - <kbd>Alt</kbd>+<kbd>t</kbd> - Select tag kind filter on per language basis.
 - <kbd>g</kbd> - Interactive grep.
-- <kbd>p</kbd> - Project selector.
-- <kbd>Alt</kbd>+<kbd>p</kbd> - Project related commands.
 
 When Kakoune runs inside Tmux, fzf.kak will use the bottom split to display the `fzf` window.
 Additional keybindings are also made available to open files in a vertical or horizontal split.
@@ -197,20 +195,6 @@ Feature requests and merge requests are welcome.
 When running inside Tmux, `fzf` will use bottom split.
 The height of this split can be changed with the `fzf_tmux_height` option.
 `fzf_tmux_height_file_preview` option is used to control the height of the split when file-preview is turned on.
-
-
-### Projects
-
-| module        |
-|---------------|
-| `fzf-project` |
-
-fzf.kak has basic project manipulation capabilities.
-
-To store projects a hidden file is created in `%val{config}` and called `.fzf-projects`.
-The location of this file and its name can be changed by modifying the `fzf_project_file` option.
-By default project paths that start from the home directory will use `~` instead of the real path.
-To change this, set `fzf_project_use_tilda` option to `false`.
 
 
 ## `fzf` command
