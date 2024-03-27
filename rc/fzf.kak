@@ -32,25 +32,8 @@ Supported values: up (top),  down (bottom), left, right, auto
 Default value: auto' \
 str fzf_preview_pos "auto"
 
-declare-option -docstring 'Highlighter to use in preview window. You can provide
-only the name of the tool that you want to use, or specify a command.
-Supported tools:
-    <package>: <value>:
-    Bat:       "bat"
-    Coderay:   "coderay"
-    Highlight: "highlight"
-    Rouge:     "rouge"
-    clp:       "clp"
-
-These are default arguments for the tools above:
-    <tool>:    <value>:
-    bat:       "bat --color=always --style=plain {}"
-    coderay:   "coderay {}"
-    highlight: "highlight --failsafe -O ansi {}"
-    rouge:     "rougify {}"
-    clp:       "clp {}"
-' \
-str fzf_highlight_command "highlight"
+declare-option -docstring 'Highlight command to use for previews' \
+str fzf_highlight_command "bat --color=always --style=plain {}"
 
 declare-option -docstring "height of fzf tmux split in screen lines or percents.
 Default value: 25%%" \
@@ -184,15 +167,7 @@ fzf -params .. %{ evaluate-commands %sh{
 
         # handle preview if not defined explicitly with `-preview-cmd'
         if [ "${kak_opt_fzf_preview:-}" = "true" ] && [ -z "${preview_cmd}" ]; then
-            case ${kak_opt_fzf_highlight_command:-} in
-                (bat)       highlight_cmd="bat --color=always --style=plain {}" ;;
-                (coderay)   highlight_cmd="coderay {}" ;;
-                (highlight) highlight_cmd="highlight --failsafe -O ansi {}" ;;
-                (rouge)     highlight_cmd="rougify {}" ;;
-                (clp)       highlight_cmd="clp {}" ;;
-                (*)         highlight_cmd="${kak_opt_fzf_highlight_command}" ;;
-            esac
-            preview_cmd="--preview '(${highlight_cmd} || cat {}) 2>/dev/null' --preview-window=\${pos}:+2-/2"
+            preview_cmd="--preview '(${kak_opt_fzf_highlight_command}) 2>/dev/null' --preview-window=\${pos}:+2-/2"
         fi
     fi
 
