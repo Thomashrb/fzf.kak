@@ -35,7 +35,6 @@ This will invoke the user mode, which contains mnemonic keybindings for each sub
 If all modules were loaded, the following mappings are available:
 
 - <kbd>b</kbd> - Select buffer.
-- <kbd>c</kbd> - Switch server's working directory.
 - <kbd>f</kbd> - Search for file and open it.
 - <kbd>v</kbd> - Edit file in version control system tree.
 - <kbd>Alt</kbd>+<kbd>v</kbd> - Explicitly select which VCS command to run.
