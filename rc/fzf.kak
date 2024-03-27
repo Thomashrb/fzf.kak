@@ -20,45 +20,32 @@ Currently supported implementations:
     sk: github.com/lotabout/skim' \
 str fzf_implementation 'fzf'
 
-declare-option -docstring 'allow showing preview window
-Default value:
-    true
-' \
+declare-option -docstring 'allow showing preview window' \
 bool fzf_preview true
 
 declare-option -docstring 'preview window position.
-Supported values: up (top),  down (bottom), left, right, auto
-
-Default value: auto' \
+Supported values: up (top),  down (bottom), left, right, auto' \
 str fzf_preview_pos "auto"
 
 declare-option -docstring 'Highlight command to use for previews' \
 str fzf_highlight_command "bat --color=always --style=plain {}"
 
-declare-option -docstring "height of fzf tmux split in screen lines or percents.
-Default value: 25%%" \
+declare-option -docstring "height of fzf tmux split in screen lines or percents" \
 str fzf_tmux_height '25%'
 
-declare-option -docstring "width of fzf tmux popup in screen lines or percents.
-Default value: 50%%" \
+declare-option -docstring "width of fzf tmux popup in screen lines or percents" \
 str fzf_tmux_popup_width '50%'
 
-declare-option -docstring "height of fzf tmux split for file preview in screen lines or percents.
-Default value: 70%%" \
+declare-option -docstring "height of fzf tmux split for file preview in screen lines or percents" \
 str fzf_preview_tmux_height '70%'
 
-declare-option -docstring "width of preview window.
-Default value: 50%%" \
+declare-option -docstring "width of preview window" \
 str fzf_preview_width '50%'
 
-declare-option -docstring "height of preview window.
-Default value: 60%%" \
+declare-option -docstring "height of preview window" \
 str fzf_preview_height '60%'
 
-declare-option -docstring 'use tmux popup instead of split pane
-Default value:
-    false
-' \
+declare-option -docstring 'use tmux popup instead of split pane' \
 bool fzf_tmux_popup false
 
 declare-option -docstring "mapping to execute action in new window" \
@@ -70,9 +57,7 @@ str fzf_vertical_map 'ctrl-v'
 declare-option -docstring "mapping to execute action in new horizontal split" \
 str fzf_horizontal_map 'ctrl-s'
 
-declare-option -docstring 'command to use to create new window when not using tmux.
-
-Default value: terminal kak -c %val{session} -e "%arg{@}"' \
+declare-option -docstring 'command to use to create new window when not using tmux' \
 str fzf_terminal_command 'terminal kak -c %val{session} -e "%arg{@}"'
 
 declare-option -docstring "use main selection as default query for fzf if the selection is longer than 1 char." \
