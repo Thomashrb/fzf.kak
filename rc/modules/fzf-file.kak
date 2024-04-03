@@ -9,28 +9,14 @@ hook global ModuleLoaded fzf %{
 
 provide-module fzf-file %§
 
-declare-option -docstring "command to provide list of files to fzf. Arguments are supported
-Supported tools:
-    <package>:           <value>:
-    GNU Find:            ""find""
-    The Silver Searcher: ""ag""
-    ripgrep:             ""rg""
-    fd:                  ""fd""
-
-Default arguments:
+declare-option -docstring "command to provide list of files to fzf
+ex:
     find: ""find -L . -type f""
     ag:   ""ag -l -f --hidden --one-device .""
     rg:   ""rg -L --hidden --files""
     fd:   ""fd --type f --follow""
 " \
-str fzf_file_command "find"
-
-declare-option -docstring 'allow showing preview window while searching for file
-Default value:
-    true
-' \
-bool fzf_file_preview true
-
+str fzf_file_command "find -L . -type f"
 
 define-command -hidden fzf-file -params 0..2 %{ evaluate-commands %sh{
     # Default fzf-file behavior
@@ -43,34 +29,20 @@ define-command -hidden fzf-file -params 0..2 %{ evaluate-commands %sh{
         search_dir=$(dirname "$kak_buffile")
     fi
 
-    if [ -z "$(command -v "${kak_opt_fzf_file_command%% *}")" ]; then
-        printf "%s\n" "echo -markup '{Information}''$kak_opt_fzf_file_command'' is not installed. Falling back to ''find'''"
-        kak_opt_fzf_file_command="find"
-    fi
-    cmd_append=""
-    case "$1" in
-       (extra-switch=*) cmd_append="${1#extra-switch=}" ;;
-    esac
-    case "$2" in
-       (extra-switch=*) cmd_append="${2#extra-switch=}" ;;
-    esac
-    case $kak_opt_fzf_file_command in
-        (find)              cmd="find -L . -type f $cmd_append" ;;
-        (ag)                cmd="ag -l -f --hidden --one-device $cmd_append . " ;;
-        (rg)                cmd="rg -L --hidden --files $cmd_append" ;;
-        (fd)                cmd="fd --type f --follow $cmd_append" ;;
-        (find*|ag*|rg*|fd*) cmd="$kak_opt_fzf_file_command $cmd_append";;
-        (*)                 items_executable=$(printf "%s\n" "$kak_opt_fzf_file_command $cmd_append" | grep -o -E "[[:alpha:]]+" | head -1)
-                            printf "%s\n" "echo -markup %{{Information}Warning: '$items_executable' is not supported by fzf.kak.}"
-                            cmd="$kak_opt_fzf_file_command $cmd_append";;
-    esac
+    cmd="cd $search_dir; $kak_opt_fzf_file_command 2>/dev/null"
 
-    cmd="cd $search_dir; $cmd 2>/dev/null"
+    maybe_filter_param=""
+    if [ "$search_dir" != "." ]; then
+        # Since we cd-ed into search dir in $cmd, prefix the $search_dir path after fzf returns the results by using -filter switch of fzf.
+        # Kakoune either needs an absolute path or path relative to its pwd to edit a file. Since the pwd of $cmd and kakoune now differ,
+        # we cannot use a relative path, so we construct the absolute path by prefixing the $search_dir to the file outputted by fzf.
+        maybe_filter_param=$(printf "%s %s" "-filter" "%{perl -pe \"print \\\"$search_dir/\\\"\"}")
+    fi
+
     message="<ret>: open file in new buffer."
 
-    printf "%s\n" "info -title 'fzf file' '$message$tmux_keybindings'"
-    [ "${kak_opt_fzf_file_preview:-}" = "true" ] && preview_flag="-preview"
-    printf "%s\n" "fzf $preview_flag $search_dir -kak-cmd %{edit -existing} -items-cmd %{$cmd} -fzf-args %{-m $additional_flags}"
+    printf "%s\n" "info -title 'fzf file' '$message'"
+    printf "%s\n" "fzf -preview $maybe_filter_param -kak-cmd %{edit -existing} -items-cmd %{$cmd}"
 }}
 
 §
