@@ -37,9 +37,6 @@ str fzf_terminal_command 'terminal kak -c %val{session} -e "%arg{@}"'
 declare-option -docstring "use main selection as default query for fzf if the selection is longer than 1 char." \
 bool fzf_use_main_selection true
 
-declare-option -docstring "Default options for fzf." \
-str fzf_default_opts ''
-
 try %{ declare-user-mode fzf }
 
 define-command -docstring \
@@ -119,7 +116,6 @@ fzf -params .. %{ evaluate-commands %sh{
             printf "%s\n" "SHELL=${shell_path}"
         fi
         # compose entire fzf command with all args into single file which will be executed later
-        printf "%s\n" "export FZF_DEFAULT_OPTS=\"${kak_opt_fzf_default_opts:-}\""
         printf "%s\n" "cd \"${PWD}\" && ${preview_position} ${items_cmd} fzf ${default_query} ${fzf_args} ${preview_cmd} ${filter} > ${result}"
         printf "%s\n" "rm ${fzfcmd}"
     ) >> "${fzfcmd}"
