@@ -27,9 +27,6 @@ str fzf_highlight_command "bat --color=always --style=plain {}"
 declare-option -docstring "height of fzf tmux split in screen lines or percents" \
 str fzf_tmux_height '90%'
 
-declare-option -docstring "width of fzf tmux popup in screen lines or percents" \
-str fzf_tmux_popup_width '90%'
-
 declare-option -docstring "height of fzf tmux split for file preview in screen lines or percents" \
 str fzf_preview_tmux_height '90%'
 
@@ -38,9 +35,6 @@ str fzf_preview_width '50%'
 
 declare-option -docstring "height of preview window" \
 str fzf_preview_height '95%'
-
-declare-option -docstring 'use tmux popup instead of split pane' \
-bool fzf_tmux_popup false
 
 declare-option -docstring 'command to use to create new window when not using tmux' \
 str fzf_terminal_command 'terminal kak -c %val{session} -e "%arg{@}"'
@@ -139,15 +133,8 @@ fzf -params .. %{ evaluate-commands %sh{
     if [ -n "${kak_client_env_TMUX}" ]; then
         # set default height if not set already
         [ -z "${tmux_height}" ] && tmux_height=${kak_opt_fzf_tmux_height:-}
-        # if popup is enabled use popup otherwise split-window
-        tmux_command="split-window"
-        if [ "${kak_opt_fzf_tmux_popup:-}" = "true" ]; then
-             tmux_command="popup -E"
-             popup_width_measure="-w"
-             popup_width="${kak_opt_fzf_tmux_popup_width}"
-        fi
         # `terminal' doesn't support any kind of width and height parameters, so tmux panes are created by tmux itself
-        cmd="nop %sh{ command tmux ${tmux_command} -t '${kak_client_env_TMUX_PANE:-}' -l ${tmux_height} ${popup_width_measure} ${popup_width} env ${fzfcmd} < /dev/null > /dev/null 2>&1 }"
+        cmd="nop %sh{ command tmux split-window -t '${kak_client_env_TMUX_PANE:-}' -l ${tmux_height} env ${fzfcmd} < /dev/null > /dev/null 2>&1 }"
         echo $cmd > /tmp/fzf.kak.test
     else
         cmd="${kak_opt_fzf_terminal_command%% *} %{${fzfcmd}}"
