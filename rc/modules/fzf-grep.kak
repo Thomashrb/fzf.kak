@@ -24,12 +24,7 @@ define-command -hidden fzf-grep %{ evaluate-commands %sh{
     cmd="$kak_opt_fzf_grep_command 2>/dev/null"
 
     title="fzf grep"
-    message="grep through contents of all files recursively.
-<ret>: open search result in new buffer.
-${kak_opt_fzf_window_map:-ctrl-w}: open search result in new terminal"
-    [ -n "${kak_client_env_TMUX:-}" ] && tmux_keybindings="
-${kak_opt_fzf_horizontal_map:-ctrl-s}: open search result in horizontal split
-${kak_opt_fzf_vertical_map:-ctrl-v}: open search result in vertical split"
+    message="<ret>: open search result in new buffer."
 
     preview_cmd=""
     if [ "${kak_opt_fzf_grep_preview:-}" = "true" ]; then
@@ -37,8 +32,7 @@ ${kak_opt_fzf_vertical_map:-ctrl-v}: open search result in vertical split"
     fi
 
     printf "%s\n" "info -title '${title}' '${message}${tmux_keybindings}'"
-    [ -n "${kak_client_env_TMUX}" ] && additional_flags="--expect ${kak_opt_fzf_vertical_map:-ctrl-v} --expect ${kak_opt_fzf_horizontal_map:-ctrl-s}"
-    printf "%s\n" "fzf -kak-cmd %{evaluate-commands} ${preview_cmd} -fzf-args %{--expect ${kak_opt_fzf_window_map:-ctrl-w} $additional_flags  --delimiter=':' -n'3..'} -items-cmd %{$cmd} -filter %{sed -E 's/([^:]+):([^:]+):.*/edit -existing \1; execute-keys \2gvc/'}"
+    printf "%s\n" "fzf -kak-cmd %{evaluate-commands} ${preview_cmd} -fzf-args %{--delimiter=':' -n'3..'}  -items-cmd %{$cmd} -filter %{sed -E 's/([^:]+):([^:]+):.*/edit -existing \1; execute-keys \2gvc/'}"
 }}
 
 §

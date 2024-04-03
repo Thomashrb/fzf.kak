@@ -22,7 +22,6 @@ evaluate-commands %sh{
 }
 ```
 
-
 ## Usage
 
 fzf.kak provides a `fzf-mode` command that can be mapped to preferred key:
@@ -43,7 +42,6 @@ If all modules were loaded, the following mappings are available:
 - <kbd>g</kbd> - Interactive grep.
 
 When Kakoune runs inside Tmux, fzf.kak will use the bottom split to display the `fzf` window.
-Additional keybindings are also made available to open files in a vertical or horizontal split.
 Otherwise, the `terminal` command is being used to create new windows.
 
 
@@ -51,53 +49,6 @@ Otherwise, the `terminal` command is being used to create new windows.
 
 fzf.kak features a lot of settings via options that can be altered to change how fzf.kak behaves.
 Each `.kak` file provides a Kakoune module, so any settings which alter variable values should be wrapped in the `ModuleLoaded` hook.
-
-
-### Default query
-
-| module |
-|--------|
-| `fzf`  |
-
-By default main selection is used as the default query for `fzf`, but only if the selection is more than 1 character long.
-This can be disabled by setting `fzf_use_main_selection` to `false`.
-
-
-### Windowing
-
-| module |
-|--------|
-| `fzf`  |
-
-When using Tmux fzf.kak automatically creates all needed Tmux splits and panes for you.
-In other cases fzf.kak uses the `fzf_terminal_command` option to call the windowing command to create new windows.
-By default it is set to use `terminal` alias: `terminal kak -c %val{session} -e "%arg{@}"`, but some terminals can provide other aliases or commands, like `terminal-tab` in Kitty.
-
-
-### Mappings
-
-| module |
-|--------|
-| `fzf`  |
-
-Keys that are used in the `fzf` window can be configured with these options:
-
-- `fzf_window_map` - mapping to perform an action in a new window,
-- `fzf_vertical_map` - mapping to perform an action in new vertical split (Tmux),
-- `fzf_horizontal_map` - mapping to perform an action in new horizontal split.
-
-These options should be set to work with fzf `--expect` parameter, so check out fzf documentation on this.
-
-### Tmux
-
-| module |
-|--------|
-| `fzf`  |
-
-When running inside Tmux, `fzf` will use bottom split.
-The height of this split can be changed with the `fzf_tmux_height` option.
-`fzf_tmux_height_file_preview` option is used to control the height of the split when file-preview is turned on.
-
 
 ## `fzf` command
 
@@ -118,11 +69,6 @@ The following arguments are supported:
 - `-post-action`: Extra commands that are performed after the `-kak-cmd` command.
 
 
-### External modules
-
-Support for [yank-ring.kak][25] was externalized to separate plugin [fzf-yank-ring.kak][24]
-
-
 # Alternatives
 
 There are another (often more simple and robust) plugins, which add support for integration with `fzf` or other fuzzy finders that you might be interested in:
@@ -135,13 +81,9 @@ There are another (often more simple and robust) plugins, which add support for 
 
 [7]: https://github.com/mawww/kakoune
 [8]: https://github.com/junegunn/fzf
-[10]: https://user-images.githubusercontent.com/19470159/46813471-6ee76800-cd7f-11e8-89aa-123b3a5f9f1b.gif
-[24]: https://gitlab.com/losnappas/fzf-yank-ring.kak
-[25]: https://github.com/alexherbo2/yank-ring.kak
 [26]: https://github.com/gustavo-hms/peneira
 [27]: https://github.com/kakounedotcom/connect.kak
 [28]: https://github.com/alexherbo2/kakoune.cr
-[29]: https://jeskin.net/blog/clp/
 
 <!--  LocalWords:  Github Kakoune fzf kak config git ctags Tmux fd
       LocalWords:  ripgrep readme rc

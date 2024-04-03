@@ -1,4 +1,4 @@
-# Author: Andrey Listopadov
+#n Author: Andrey Listopadov
 # This plugin implements fzf mode for Kakoune.
 # This mode adds several mappings to invoke different fzf commands.
 # https://github.com/andreyorst/fzf.kak
@@ -42,15 +42,6 @@ str fzf_preview_height '95%'
 declare-option -docstring 'use tmux popup instead of split pane' \
 bool fzf_tmux_popup false
 
-declare-option -docstring "mapping to execute action in new window" \
-str fzf_window_map 'ctrl-w'
-
-declare-option -docstring "mapping to execute action in new vertical split" \
-str fzf_vertical_map 'ctrl-v'
-
-declare-option -docstring "mapping to execute action in new horizontal split" \
-str fzf_horizontal_map 'ctrl-s'
-
 declare-option -docstring 'command to use to create new window when not using tmux' \
 str fzf_terminal_command 'terminal kak -c %val{session} -e "%arg{@}"'
 
@@ -61,25 +52,6 @@ declare-option -docstring "Default options for fzf." \
 str fzf_default_opts ''
 
 try %{ declare-user-mode fzf }
-
-define-command -hidden -docstring "wrapper command to create new vertical split" \
-fzf-vertical -params .. %{ evaluate-commands %{
-    tmux-terminal-vertical kak -c %val{session} -e "%arg{@}"
-}}
-
-define-command -hidden -docstring "wrapper command to create new horizontal split" \
-fzf-horizontal -params .. %{ evaluate-commands %{
-    tmux-terminal-horizontal kak -c %val{session} -e "%arg{@}"
-}}
-
-define-command -hidden -docstring "wrapper command to create new terminal" \
-fzf-window -params .. %{ evaluate-commands %sh{
-    if [ -n "${kak_client_env_TMUX:-}" ]; then
-        printf "%s\n" 'tmux-terminal-window kak -c %val{session} -e "%arg{@}"'
-    else
-        printf "%s\n" "${kak_opt_fzf_terminal_command:?}"
-    fi
-}}
 
 define-command -docstring \
 "fzf <switches>: generic fzf command. This command can be used to create new fzf wrappers for various Kakoune or external features.
@@ -188,16 +160,10 @@ fzf -params .. %{ evaluate-commands %sh{
         if [ -s "${result}" ]; then
             (
                 while read -r line; do
-                    case ${line} in
-                        ("${kak_opt_fzf_window_map:-ctrl-w}")     wincmd="fzf-window"     ;;
-                        ("${kak_opt_fzf_vertical_map:-ctrl-v}")   wincmd="fzf-vertical"   ;;
-                        ("${kak_opt_fzf_horizontal_map:-ctrl-s}") wincmd="fzf-horizontal" ;;
-                        (*)                                 item=${line} ;;
-                    esac
-                    if [ -n "${item}" ]; then
-                        item=$(printf "%s\n" "${item}" | sed "s/@/@@/g;s/&/&&/g")
+                    if [ -n "${line}" ]; then
+                        item=$(printf "%s\n" "${line}" | sed "s/@/@@/g;s/&/&&/g")
                         kakoune_cmd=$(printf "%s\n" "${kakoune_cmd}" | sed "s/&/&&/g")
-                        printf "%s\n" "evaluate-commands -client ${kak_client:?} ${wincmd} %&${kakoune_cmd} %@${item}@&"
+                        printf "%s\n" "evaluate-commands -client ${kak_client:?} %&${kakoune_cmd} %@${item}@&"
                         break
                     fi
                 done

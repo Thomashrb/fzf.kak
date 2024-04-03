@@ -66,25 +66,11 @@ define-command -hidden fzf-file -params 0..2 %{ evaluate-commands %sh{
     esac
 
     cmd="cd $search_dir; $cmd 2>/dev/null"
-
-    maybe_filter_param=""
-    if [ "$search_dir" != "." ]; then
-        # Since we cd-ed into search dir in $cmd, prefix the $search_dir path after fzf returns the results by using -filter switch of fzf.
-        # Kakoune either needs an absolute path or path relative to its pwd to edit a file. Since the pwd of $cmd and kakoune now differ,
-        # we cannot use a relative path, so we construct the absolute path by prefixing the $search_dir to the file outputted by fzf.
-        maybe_filter_param=$(printf "%s %s" "-filter" "%{perl -pe \"if (/${kak_opt_fzf_window_map:-ctrl-w}|${kak_opt_fzf_vertical_map:-ctrl-v}|${kak_opt_fzf_horizontal_map:-ctrl-s}|^$/) {} else {print \\\"$search_dir/\\\"\"}}")
-    fi
-    message="Open single or multiple files.
-<ret>: open file in new buffer.
-${kak_opt_fzf_window_map:-ctrl-w}: open file in new terminal"
-    [ -n "${kak_client_env_TMUX:-}" ] && tmux_keybindings="
-${kak_opt_fzf_horizontal_map:-ctrl-s}: open file in horizontal split
-${kak_opt_fzf_vertical_map:-ctrl-v}: open file in vertical split"
+    message="<ret>: open file in new buffer."
 
     printf "%s\n" "info -title 'fzf file' '$message$tmux_keybindings'"
-    [ -n "${kak_client_env_TMUX}" ] && additional_flags="--expect ${kak_opt_fzf_vertical_map:-ctrl-v} --expect ${kak_opt_fzf_horizontal_map:-ctrl-s}"
     [ "${kak_opt_fzf_file_preview:-}" = "true" ] && preview_flag="-preview"
-    printf "%s\n" "fzf $preview_flag $maybe_filter_param -kak-cmd %{edit -existing} -items-cmd %{$cmd} -fzf-args %{-m --expect ${kak_opt_fzf_window_map:-ctrl-w} $additional_flags}"
+    printf "%s\n" "fzf $preview_flag $search_dir -kak-cmd %{edit -existing} -items-cmd %{$cmd} -fzf-args %{-m $additional_flags}"
 }}
 
 §
