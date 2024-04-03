@@ -1,7 +1,3 @@
-# Author: Andrey Listopadov
-# Module for searching tags with fzf and universal-ctags for fzf.kak plugin
-# https://github.com/andreyorst/fzf.kak
-
 hook global ModuleLoaded fzf %{
     map global fzf -docstring "find tag" 't' '<esc>: require-module fzf-ctags; fzf-tag<ret>'
 }

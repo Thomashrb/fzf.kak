@@ -1,8 +1,3 @@
-#n Author: Andrey Listopadov
-# This plugin implements fzf mode for Kakoune.
-# This mode adds several mappings to invoke different fzf commands.
-# https://github.com/andreyorst/fzf.kak
-
 define-command -docstring "Enter fzf-mode.
 fzf-mode contains mnemonic key bindings for every fzf.kak command
 

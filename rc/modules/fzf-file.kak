@@ -1,7 +1,3 @@
-# Author: Andrey Listopadov
-# Module for opening files with fzf for fzf.kak plugin
-# https://github.com/andreyorst/fzf.kak
-
 hook global ModuleLoaded fzf %{
     map global fzf -docstring "open file" 'f' '<esc>: require-module fzf-file; fzf-file<ret>'
     map global fzf -docstring "open file in dir of currently displayed file" 'F' '<esc>: require-module fzf-file; fzf-file buffile-dir<ret>'

@@ -1,7 +1,3 @@
-# Author: Andrey Listopadov
-# Git support for fzf.kak
-# https://github.com/andreyorst/fzf.kak
-
 hook global ModuleLoaded fzf %§
     map global fzf -docstring "edit file from vcs repo"      'v'     '<esc>: require-module fzf-git; fzf-git<ret>'
 §

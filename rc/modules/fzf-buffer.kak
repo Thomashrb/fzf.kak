@@ -1,7 +1,3 @@
-# Author: Andrey Listopadov
-# Module for changing buffers with fzf for fzf.kak plugin
-# https://github.com/andreyorst/fzf.kak
-
 hook global ModuleLoaded fzf %{
     map global fzf -docstring "open buffer" 'b' '<esc>: require-module fzf-buffer; fzf-buffer<ret>'
     map global fzf -docstring "delete buffer" '<a-b>' '<esc>: require-module fzf-buffer; fzf-delete-buffer<ret>'

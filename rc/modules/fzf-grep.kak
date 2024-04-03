@@ -1,7 +1,3 @@
-# Author: Andrey Listopadov
-# Module for grepping file contents
-# https://github.com/andreyorst/fzf.kak
-
 hook global ModuleLoaded fzf %{
     map -docstring 'grep file contents recursively' global fzf g ': require-module fzf-grep; fzf-grep<ret>'
 }

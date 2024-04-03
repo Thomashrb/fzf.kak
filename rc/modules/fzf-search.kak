@@ -1,7 +1,3 @@
-# Author: Andrey Listopadov
-# Module for searching inside current buffer with fzf for fzf.kak
-# https://github.com/andreyorst/fzf.kak
-
 hook global ModuleLoaded fzf %{
     map global fzf -docstring "search in buffer" 's' '<esc>: require-module fzf-search; fzf-buffer-search<ret>'
 }
